@@ -77,6 +77,7 @@
     "react": "*",
     "react-dom": "*",
     "react-select": "^5.7.3",
+    "react-tooltip": "^5.14.0",
     "ts-node": "*",
     "use-nodecg": "^0.4.1-2"
   },

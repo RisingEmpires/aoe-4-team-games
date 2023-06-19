@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Select from "react-select";
 import { useReplicant } from 'use-nodecg';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 interface DropdownOption {
 	value: string;
@@ -17,6 +18,8 @@ export function Aoe4TeamGames() {
 
 	const [leftName, set_leftName] = useReplicant<string>('leftName', '', { namespace: 'aoe-4-civ-draft' });
 	const [rightName, set_rightName] = useReplicant<string>('rightName', '', { namespace: 'aoe-4-civ-draft' });
+
+	const [showIcons, set_showIcons] = useReplicant<boolean>('showIcons', true, { namespace: 'aoe-4-team-games' });
 
 	const [updateNames, set_updateNames] = useReplicant<boolean>('updateNames', false);
 
@@ -66,17 +69,32 @@ export function Aoe4TeamGames() {
 
 	return (
 		<>
-			<div>
+			<div className="updateTeamNames">
 				<label>Update Team Names</label>
 				<input type='checkbox' checked={updateNames} onChange={(() => set_updateNames(!updateNames))} />
 			</div>
+			<ReactTooltip
+				anchorSelect=".updateTeamNames"
+				id="tooltip1"
+				place="bottom"
+				content="Updates the Team Names in the Civ Draft to the name of the image's filename"
+			/>
+			<div className="showTeamIcons">
+				<label>Show Team Icons</label>
+				<input type='checkbox' checked={showIcons} onChange={(() => set_showIcons(!showIcons))} />
+			</div>
+			<ReactTooltip
+				anchorSelect=".showTeamIcons"
+				id="tooltip2"
+				place="bottom"
+				content="Show the Team Icons in the Overlay?"
+			/>
 			<div>
-				{leftName}
 				<h1>Left Side Icon</h1>
 				<Select className="teamDropdown" options={options} onChange={handleLeftSideChange} value={leftSideIcon} placeholder={'Select Team'} />
 
 				<div style={{
-					padding: '5px 0px',
+					padding: '5px 10px',
 					display: 'flex',
 					flexDirection: 'row',
 					justifyContent: 'center',
@@ -95,7 +113,6 @@ export function Aoe4TeamGames() {
 					}} />
 				</div>
 
-				{rightName}
 				<h1>Right Side Icon</h1>
 				<Select className="teamDropdown" options={options} onChange={handleRightSideChange} value={rightSideIcon} placeholder={'Select Team'} />
 			</div>
